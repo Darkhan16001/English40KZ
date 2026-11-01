@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0c132b">
+  <meta name="description"
+    content="English40 Premium — 40 дней английского A2+–B1 с понятными объяснениями, играми и AI-помощниками">
+  <title>English40 Premium · by Darkhan</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <strong class="logo">✦ English<span>40</span></strong>
+    <span class="xp" id="xp">⭐ 0 XP</span>
+  </header>
+
+  <!-- Главная -->
+  <section id="home" class="screen active">
+    <div class="hero">
+      <small>YOUR ENGLISH ADVENTURE</small>
+      <h1>LEARN.<br>SPEAK.<br><em>LEVEL UP.</em></h1>
+      <p>
+        40 дней: A2+ → B1. Картинки, понятная
+        грамматика, новые слова, игры и два помощника.
+      </p>
+      <button id="start" class="btn primary">
+        🚀 Продолжить обучение
+      </button>
+      <div class="mascot">🤖</div>
+    </div>
+
+    <div class="stats">
+      <div><b id="today">1</b><small>День</small></div>
+      <div><b id="cardsStat">0/25</b><small>Объяснения</small></div>
+      <div><b id="questionsStat">0/15</b><small>Тест</small></div>
+    </div>
+
+    <div class="panel">
+      <h2>📈 Мой прогресс</h2>
+      <p id="courseLevel"></p>
+      <div class="bar"><div id="courseBar"></div></div>
+      <p id="courseInfo"></p>
+    </div>
+
+    <div class="panel">
+      <h2>⏳ Следующий день</h2>
+      <div id="timer" class="timer">24:00:00</div>
+      <p id="timerInfo"></p>
+      <button id="nextDay" class="btn green full">
+        Открыть следующий день
+      </button>
+    </div>
+
+    <div class="panel">
+      <h2>🗺️ Карта курса</h2>
+      <div id="days" class="days"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Каждый день</h2>
+      <p>📖 25 объяснений с мини-играми</p>
+      <p>🎮 15 обязательных заданий</p>
+      <p>⚡ 25 дополнительных по желанию</p>
+      <p>🗣️ English AI — разговор на любом уровне</p>
+      <p>🇷🇺 Русский помощник — объяснения и переводы</p>
+    </div>
+  </section>
+
+  <!-- 25 объяснений -->
+  <section id="lesson" class="screen">
+    <small class="eyebrow" id="dayLabel"></small>
+    <h2 id="topic"></h2>
+
+    <div class="panel">
+      <div class="between">
+        <b class="pill" id="step">1/25</b>
+        <span class="pill">📘 Объяснение</span>
+      </div>
+
+      <div class="bar"><div id="lessonBar"></div></div>
+
+      <div class="picture">
+        <img id="lessonPhoto" alt="Фото к уроку">
+        <span id="photoCaption">📷</span>
+      </div>
+
+      <h2 id="cardTitle"></h2>
+      <p id="cardBody" class="lesson-text"></p>
+
+      <div class="example">
+        <b id="englishExample"></b>
+        <p id="russianExample"></p>
+      </div>
+
+      <!-- Мини-игра на каждой карточке -->
+      <div class="mini">
+        <div class="between">
+          <b>🎮 Проверь себя</b>
+          <small>+3 XP</small>
+        </div>
+
+        <p id="miniQuestion"></p>
+        <div id="miniOptions"></div>
+
+        <div id="miniFeedback"
+          class="feedback hidden"></div>
+
+        <button id="helpMini" class="btn full">
+          💡 Не понял? Спросить по-русски
+        </button>
+      </div>
+
+      <!-- Видео -->
+      <div id="video" class="video hidden">
+        <h3>🎬 Видеоурок</h3>
+        <p id="videoText"></p>
+        <button class="btn primary" id="videoBtn">
+          ▶ Смотреть
+        </button>
+        <div id="videoFrame"></div>
+      </div>
+
+      <div class="buttons">
+        <button id="sayExample" class="btn">
+          🔊 Слушать пример
+        </button>
+        <button id="helpCard" class="btn">
+          🇷🇺 Объясни подробнее
+        </button>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button id="previous" class="btn">← Назад</button>
+      <button id="continue" class="btn primary">
+        Продолжить →
+      </button>
+    </div>
+
+    <div class="panel">
+      <h2>📖 Слова этого дня</h2>
+      <div id="words"></div>
+    </div>
+  </section>
+
+  <!-- Игровой тест -->
+  <section id="quiz" class="screen">
+    <small class="eyebrow" id="quizTag"></small>
+
+    <div class="panel">
+      <div class="between">
+        <h2>🎮 English Challenge</h2>
+        <span class="pill" id="quizProgress"></span>
+      </div>
+
+      <div class="bar"><div id="quizBar"></div></div>
+
+      <div id="quizPhoto" class="picture hidden">
+        <img id="quizImage" alt="Картинка для задания">
+      </div>
+
+      <h3 class="question" id="quizQuestion"></h3>
+
+      <button id="listen" class="btn hidden">
+        🔊 Прослушать слово
+      </button>
+
+      <div id="answers"></div>
+
+      <div class="feedback hidden"
+        id="quizFeedback"></div>
+
+      <div class="buttons">
+        <button id="quizHelp" class="btn">
+          🇷🇺 Не понял задание
+        </button>
+        <button id="quizNext" class="btn green hidden">
+          Продолжить →
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Результат -->
+  <section id="finish" class="screen">
+    <div class="panel finish">
+      <div class="trophy">🏆</div>
+      <h2 id="resultTitle">Молодец!</h2>
+      <p id="resultScore"></p>
+      <p>
+        Можно завершить день или пройти
+        необязательные дополнительные вопросы.
+      </p>
+
+      <div class="buttons">
+        <button id="finishBtn" class="btn green">
+          ✅ Завершить день
+        </button>
+        <button id="bonusBtn" class="btn gold">
+          ⚡ Ещё 25 вопросов
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- English AI -->
+  <section id="english" class="screen">
+    <div class="ai-hero">
+      <small class="eyebrow">ENGLISH ONLY · ALL LEVELS</small>
+      <h2>🤖 English AI</h2>
+
+      <p>
+        Свободно общайся на английском: никакого выбора
+        уровня и счётчика сообщений. Говори, пиши,
+        проверяй грамматику. Ответы озвучиваются по-английски.
+      </p>
+
+      <div class="pills">
+        <span>🌍 All levels</span>
+        <span>🎙 Speaking</span>
+        <span>✅ Grammar check</span>
+      </div>
+
+      <button class="btn green full" id="loadModel">
+        🧠 Запустить локальный ИИ
+      </button>
+
+      <button class="btn full" id="eco">
+        🌿 Включить эко-режим
+      </button>
+
+      <div class="bar"><div id="modelProgress"></div></div>
+      <div id="modelStatus" class="notice">
+        Пока работает облегчённый диалог.
+        Большая модель загружается по кнопке.
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="between">
+        <h2>💬 Conversation</h2>
+        <button class="btn small" id="newChat">
+          Новый диалог
+        </button>
+      </div>
+
+      <div id="enLog" class="chat"></div>
+
+      <textarea id="enInput" rows="3"
+        placeholder="Speak or write in English..."></textarea>
+
+      <div class="buttons">
+        <button id="record" class="btn green">
+          🎙️ Говорить
+        </button>
+        <button id="enSend" class="btn primary">
+          ➤ Отправить
+        </button>
+      </div>
+
+      <div class="buttons">
+        <button id="enCheck" class="btn">
+          ✅ Проверить
+        </button>
+        <button id="enHint" class="btn gold">
+          💡 I don't know
+        </button>
+        <button id="stopVoice" class="btn">
+          ⏹ Стоп
+        </button>
+      </div>
+
+      <p id="speechStatus" class="notice">
+        После 6 секунд без новых распознанных слов
+        текст отправится автоматически.
+      </p>
+    </div>
+  </section>
+
+  <!-- Русский помощник -->
+  <section id="russian" class="screen">
+    <div class="ai-hero ru">
+      <small class="eyebrow">
+        РУССКИЙ ПОМОЩНИК · ТОЛЬКО ТЕКСТ
+      </small>
+
+      <h2>🇷🇺 Объясню понятно</h2>
+
+      <p>
+        Что это такое? Когда используется?
+        Почему выбран ответ? Покажу формулу,
+        пример, перевод и произношение.
+        Никакого голоса и микрофона.
+      </p>
+
+      <div class="buttons">
+        <button class="btn" data-help="explain">
+          📘 Объясни
+        </button>
+        <button class="btn" data-help="example">
+          ✍️ Пример
+        </button>
+        <button class="btn" data-help="words">
+          📖 Слова
+        </button>
+        <button class="btn" data-help="task">
+          ❓ Задание
+        </button>
+        <button class="btn" data-help="pronounce">
+          🔤 Произношение
+        </button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <p id="ruContext"></p>
+      <div id="ruLog" class="chat"></div>
+
+      <textarea id="ruInput" rows="3"
+        placeholder="Почему здесь am? Что значит revising? Объясни правило урока..."></textarea>
+
+      <button id="ruSend" class="btn primary full">
+        ➤ Спросить по-русски
+      </button>
+
+      <p class="muted">
+        Незнакомые слова переводятся онлайн.
+        Для свободных объяснений других тем
+        доступна необязательная локальная модель.
+      </p>
+    </div>
+  </section>
+
+  <!-- Настройки -->
+  <section id="settings" class="screen">
+    <div class="panel">
+      <h2>⚙️ Настройки</h2>
+
+      <label class="check">
+        <input id="voice" type="checkbox" checked>
+        Озвучивать ответы English AI
+      </label>
+
+      <p>
+        Русский помощник всегда отвечает
+        только текстом.
+      </p>
+
+      <button id="allowMic" class="btn green">
+        🎙️ Разрешить микрофон
+      </button>
+
+      <p id="micNotice" class="notice">
+        Для микрофона на телефоне нужен HTTPS.
+      </p>
+    </div>
+
+    <div class="panel">
+      <h2>🔗 Публичный сайт</h2>
+      <p id="siteLink"></p>
+      <button id="share" class="btn primary full">
+        Поделиться ссылкой
+      </button>
+    </div>
+  </section>
+
+  <footer>ENGLISH40 PREMIUM · BY DARKHAN</footer>
+</div>
+
+<nav class="nav">
+  <button class="selected" data-page="home">
+    <span>⌂</span>Главная
+  </button>
+  <button data-page="lesson">
+    <span>📚</span>Урок
+  </button>
+  <button data-page="english">
+    <span>🤖</span>English AI
+  </button>
+  <button data-page="russian">
+    <span>🇷🇺</span>Помощь
+  </button>
+  <button data-page="settings">
+    <span>⚙️</span>Опции
+  </button>
+</nav>
+</body>
+</html>
+
